@@ -8,10 +8,10 @@ $nascimento = filter_input(INPUT_POST, 'nascimento', FILTER_SANITIZE_NUMBER_INT)
 $rg = filter_input(INPUT_POST, 'rg', FILTER_SANITIZE_STRING);
 $cpf = filter_input(INPUT_POST, 'cpf', FILTER_SANITIZE_STRING);
 
+$result_usuario = "UPDATE pessoas SET nome='$nome', nascimento='$nascimento', rg='$rg', cpf='$cpf' WHERE id='$id'";
+$resultado_usuario = mysqli_query($conn, $result_usuario);
 
 
-//verificar se o cpf já foi cadastrado no banco
-$verificar = mysqli_query($conn, "SELECT * FROM pessoas WHERE cpf = '$cpf'");
 //conexão com a class Validar (cpfok.php)
 if (isset($_POST['registraform']) && !empty($_POST['cpf'])) {
 	require "cpfok.php";
@@ -20,15 +20,6 @@ if (isset($_POST['registraform']) && !empty($_POST['cpf'])) {
 	$cpf = $_POST['cpf'];
 	//verificar CPF invalido
 	if ($V->ValidarCpf($cpf) == true) {
-		//consultar no banco se o CPF já foi cadastrado
-			if(mysqli_num_rows($verificar) > 1){
-
-				echo "<script>window.location.href = 'index.php';
-				alert('NÃO FOI POSSÍVEL CADASTRAR, CPF JÁ EXISTE NO BANCO DE DADOS');</script>";
-			}
-			else{
-			$result_usuario = "UPDATE pessoas SET nome='$nome', nascimento='$nascimento', rg='$rg', cpf='$cpf' WHERE id='$id'";
-			$resultado_usuario = mysqli_query($conn, $result_usuario);
 
 				//redirecionamento para a página de lista de usuários, atrávez do PHP e JavaScript
 				 if ($resultado_usuario) {
@@ -38,7 +29,6 @@ if (isset($_POST['registraform']) && !empty($_POST['cpf'])) {
 				 	echo "<script>window.location.href = 'lista2.php';
 					alert('ERROR: USUÁRIO NÃO FOI ATUALIZADO');</script>";
 				 }
-			}
 		}else{
 		echo "<script>window.location.href = 'index.php';
 			alert('NÃO FOI POSSÍVEL CADASTRAR, CPF INVÁLIDO');</script>";
