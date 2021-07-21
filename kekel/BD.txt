@@ -1,0 +1,25 @@
+CREATE DATABASE REGISTRO;
+
+USE REGISTRO;
+
+create table cliente (
+id int not null auto_increment primary key,
+cnpj int(14) not null,
+codigo varchar(5) not null,
+empresa varchar(255) not null,
+
+cep int(8) not null,
+endereco varchar(255) not null,
+bairro varchar(40) not null,
+municipio varchar(50),
+uf varchar(2),
+complemento varchar(20),
+
+sites varchar(255),
+telefone int(14),
+email1 varchar(100),
+email2 varchar(100),
+ie varchar(15),
+im varchar(10),
+situacao varchar(10) not null,
+);
